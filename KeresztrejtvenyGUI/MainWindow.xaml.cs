@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -34,6 +35,32 @@ namespace KeresztrejtvenyGUI
             }
             cbMentesIndex.SelectedIndex = 2; 
         }
+        private void btnLetrehozas_Click(object sender, RoutedEventArgs e)
+        {
+            icRacs.Items.Clear();
+
+            int sor = (int)cbSorok.SelectedItem;
+            int oszlop = (int)cbOszlopok.SelectedItem;
+
+            var factory = new FrameworkElementFactory(typeof(UniformGrid));
+            factory.SetValue(UniformGrid.RowsProperty, sor);
+            factory.SetValue(UniformGrid.ColumnsProperty, oszlop);
+            icRacs.ItemsPanel = new ItemsPanelTemplate(factory);
+
+            for (int i = 0; i < sor * oszlop; i++)
+            {
+                TextBox tb = new TextBox
+                {
+                    Text = "-",
+                    Width = 30,
+                    Height = 30,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                };
+            }
+        }
+
+        
     }
 
 }

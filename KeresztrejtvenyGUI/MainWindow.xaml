@@ -11,7 +11,7 @@
             <ComboBox x:Name="cbSorok" Width="50" Margin="5"/>
             <Label Content="Oszlopok:"/>
             <ComboBox x:Name="cbOszlopok" Width="50" Margin="5"/>
-            <Button x:Name="btnLetrehozas" Content="Keresztrejtvény létrehozása"  Padding="5,0"/>
+            <Button x:Name="btnLetrehozas" Content="Keresztrejtvény létrehozása"  Padding="5,0" Click="btnLetrehozas_Click"/>
 
             <Separator Width="20" Background="Transparent"/>
 
