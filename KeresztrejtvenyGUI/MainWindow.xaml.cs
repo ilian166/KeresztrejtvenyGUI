@@ -33,7 +33,7 @@ namespace KeresztrejtvenyGUI
             {
                 cbMentesIndex.Items.Add(i);
             }
-            cbMentesIndex.SelectedIndex = 2; 
+            cbMentesIndex.SelectedIndex = 2;
         }
         private void btnLetrehozas_Click(object sender, RoutedEventArgs e)
         {
@@ -56,11 +56,59 @@ namespace KeresztrejtvenyGUI
                     Height = 30,
                     HorizontalContentAlignment = HorizontalAlignment.Center,
                     VerticalContentAlignment = VerticalAlignment.Center,
+                    MaxLength = 1
                 };
+
+
+                tb.MouseDoubleClick += Mezo_MouseDoubleClick;
+
+                icRacs.Items.Add(tb);
+            }
+        }
+        private void Mezo_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TextBox tb)
+            {
+                tb.Text = (tb.Text == "-") ? "#" : "-";
+
+                tb.SelectionStart = tb.Text.Length;
             }
         }
 
-        
-    }
 
+
+
+        private void btnMentes_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int index = (int)cbMentesIndex.SelectedItem;
+                string fajlnev = $"kr{index}.txt";
+                int oszlopDb = (int)cbOszlopok.SelectedItem;
+
+                List<string> sorok = new List<string>();
+                string aktualisSor = "";
+
+                for (int i = 0; i < icRacs.Items.Count; i++)
+                {
+                    var tb = (TextBox)icRacs.Items[i];
+                    aktualisSor += tb.Text;
+
+                    if ((i + 1) % oszlopDb == 0)
+                    {
+                        sorok.Add(aktualisSor);
+                        aktualisSor = "";
+                    }
+                }
+
+                System.IO.File.WriteAllLines(fajlnev, sorok);
+                MessageBox.Show("Sikeres mentés!", "Információ", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba: {ex.Message}", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+    }
 }
